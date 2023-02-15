@@ -23,6 +23,8 @@ public class test {
 //		 数式を標準入力で受け取る
 		System.out.println("数式を入力してください");
 //		1+( 2 ( 3 + (( 5 / 2 ) - 3 )))
+//		1+( 2 * ( 3 + (( 5 / 2 ) - 3 )))
+//		(5*2)/30+4-7
 		
 		Scanner scanner = new Scanner(System.in);
 		String formula = scanner.nextLine();
@@ -30,14 +32,21 @@ public class test {
 //		 スペース除去
 		formula = formula.replaceAll(" ", "");
 		
-//		 2(などの時、*を追加
-//		for(int i = 0; i < formula.length(); i++) {
-//			if('0' <= formula.charAt(i) && formula.charAt(i) <= '9') {
-//				if(formula.charAt(i+1).equals("(")) {
-//					
-//				}
-//			}
-//		}
+		// 数字と(の前に乗算記号追加
+		for(int i = 0; i < formula.length(); i++) {
+			int count = i + 1;
+			if('0' <= formula.charAt(i) && formula.charAt(i) <= '9' && formula.charAt(count) == '(') {
+//				 2のインデックス番号を取得
+				int index = formula.indexOf(formula.charAt(i));
+//				System.out.println(index);
+//				System.out.println(formula.substring(0, index)); これだと1+(までしか出ないので↓ので
+//				System.out.println(formula.substring(0, index+1));
+//				System.out.println(formula.substring(index+1, formula.length()));
+				System.out.println(formula.substring(0, index+1) + "*" + formula.substring(index+1, formula.length()));
+				
+				formula = formula.substring(0, index+1) + "*" + formula.substring(index+1, formula.length());
+			}
+		}
 		
 		Deque<Character> stack = new ArrayDeque<>();
 		String ans = "";
@@ -47,7 +56,11 @@ public class test {
 			if('0' <= formula.charAt(i) && formula.charAt(i) <= '9') {
 				tmp += formula.charAt(i);
 //				if(formula.charAt(i+1).equals("(")) {
-//					
+//                System.out.println(tmp); 
+//				}
+//				if(i == formula.length()) {
+//					ans += tmp;
+//					tmp = "";
 //				}
 			} else {
 				if(!tmp.equals("")) {
@@ -65,8 +78,12 @@ public class test {
 				} else {
 					stack.push(formula.charAt(i));
 				}
+				
 			}
 		}
+		
+		ans += (tmp + stack.pop());
+		
 //		return ans;　クラスを分けたらprintlnでなくansに戻す
 		System.out.println(ans);
 	}
