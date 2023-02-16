@@ -58,7 +58,11 @@ public class GetRpn {
 			}
 		}
 		
-		ans += (tmp + stack.pop());
+		ans += tmp;
+		
+		while(!stack.isEmpty()) {
+			ans += stack.pop();
+		}
 		
 //		RPN記法にした数式を返す。
 		return ans;
