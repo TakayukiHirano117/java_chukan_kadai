@@ -31,6 +31,10 @@ public class GetRpn {
 			}
 		}
 		
+//		×や÷の記号を*, /に変更
+		formula = formula.replace("×", "*");
+		formula = formula.replace("÷", "/");
+		
 		Deque<Character> stack = new ArrayDeque<>();
 		String ans = "";
 		String tmp = "";
@@ -63,6 +67,7 @@ public class GetRpn {
 		while(!stack.isEmpty()) {
 			ans += stack.pop();
 		}
+
 		
 //		RPN記法にした数式を返す。
 		return ans;
