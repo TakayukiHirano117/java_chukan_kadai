@@ -23,7 +23,7 @@ public class GetRpn {
 		formula = formula.replaceAll(" ", "");
 		
 		// 数字と(の前に乗算記号追加
-		for(int i = 0; i < formula.length(); i++) {
+		for(int i = 0; i < formula.length()-1; i++) {
 			int count = i + 1;
 			if('0' <= formula.charAt(i) && formula.charAt(i) <= '9' && formula.charAt(count) == '(') {
 				int index = formula.indexOf(formula.charAt(i));
