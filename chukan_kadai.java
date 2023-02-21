@@ -4,8 +4,10 @@ public class chukan_kadai {
 	public static void main(String args[]) {
 		String formula = GetFormula.getFormula();
 		String rpnExpression = GetRpn.getRpn(formula);
-		int answer = Cal.result(rpnExpression);
+		double answer = Cal.result(rpnExpression);
 		
 		System.out.println(answer);
+		
 	}
+	
 }
