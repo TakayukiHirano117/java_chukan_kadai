@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class GetRpn {
 	public static String getRpn(String formula) {
@@ -19,37 +20,27 @@ public class GetRpn {
 			}
 		};
 		
-//		 スペース除去
-		formula = formula.replaceAll(" ", "");
-		
-		// 数字と(の前に乗算記号追加
-		for(int i = 0; i < formula.length()-1; i++) {
-			int count = i + 1;
-			if('0' <= formula.charAt(i) && formula.charAt(i) <= '9' && formula.charAt(count) == '(') {
-				int index = formula.indexOf(formula.charAt(i));
-				formula = formula.substring(0, index+1) + "*" + formula.substring(index+1, formula.length());
-			}
-		}
-		
-//		×や÷の記号を*, /に変更
-		formula = formula.replace("×", "*");
-		formula = formula.replace("÷", "/");
-		
 		Deque<Character> stack = new ArrayDeque<>();
 		String ans = "";
 		String tmp = "";
 		
 		for(int i = 0; i < formula.length(); i++) {
-			if('0' <= formula.charAt(i) && formula.charAt(i) <= '9') {
+
+			if(('0' <= formula.charAt(i) && formula.charAt(i) <= '9'  || 'a' <= formula.charAt(i) && formula.charAt(i) <= 'z' || 'A' <= formula.charAt(i) && formula.charAt(i) <= 'Z')) {
 				tmp += formula.charAt(i);
 				
 			} else {
 				if(!tmp.equals("")) {
+					if (ans.length() > 0) {
+	                    ans += " ";
+	                }
 					ans += tmp;
 					tmp = "";
 			}
 			
+//			whileでぶん回して数値が続く限りstackからpopして連結してまたぶち込む
 			while(!stack.isEmpty() && rpnPriority.get(stack.peek()) >= rpnPriority.get(formula.charAt(i)) && stack.peek() != '(') {
+				ans += " ";
 				ans += stack.pop();
 			}
 			
@@ -62,12 +53,17 @@ public class GetRpn {
 			}
 		}
 		
-		ans += tmp;
+		if(!tmp.equals("")) {
+			ans += " ";
+			ans += tmp;
+		}
+		
 		
 		while(!stack.isEmpty()) {
+			ans += " ";
 			ans += stack.pop();
+			
 		}
-
 		
 //		RPN記法にした数式を返す。
 		return ans;
