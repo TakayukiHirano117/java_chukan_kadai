@@ -57,20 +57,19 @@ public class Cal {
 	}
 	
 	public static boolean checkHead(String s) {
-        boolean res = true;
-        
-        for(int i = 0; i < s.length(); i++) {
-            // もし先頭が数値でなかったら次の処理へ
-            if(!Character.isDigit(s.charAt(0))) {
-                continue;
-            } else {
-            // 変数にfalseを代入して処理を終了する
-                res =  false;
-                break;
-            }
-        }
-		
-        return res;
-    }
+		boolean res = true;
+		for(int i = 0; i < s.length(); i++) {
+		    // もし文字列の先頭が数値でなかったら次の処理へ
+		    if(!Character.isDigit(s.charAt(0))) {
+			continue;
+		    } else {
+		    // 変数にfalseを代入して処理を終了する
+			res =  false;
+			break;
+		    }
+		}
+
+		return res;
+	    }
 	
 }
