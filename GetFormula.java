@@ -38,6 +38,7 @@ public class GetFormula {
 				}
 			}
 			
+			// 変数の先頭に数字が使われているかどうか
 			for(int i = 0; i < formula.split("[+-/*×÷]").length; i++) {
 				String s = formula.split("[+-/*×÷]")[i];
 				s = s.replace("(", "");
