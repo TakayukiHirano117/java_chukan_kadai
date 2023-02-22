@@ -5,7 +5,7 @@ import java.util.Scanner;
 //標準入力から数式を受け取る処理
 public class GetFormula {
 	public static String getFormula() {
-
+		// while(true)で囲んで、エラー文が出力されたら、式を入力しなおしてもらう
 		System.out.println("数式を入力してください");
 		
 		while(true) {
@@ -13,6 +13,7 @@ public class GetFormula {
 			int count1 = 0;
 			int count2 = 0;
 			boolean rowOperator = true;
+			boolean varHead = true;
 			
 			Scanner scanner = new Scanner(System.in);
 			String formula = scanner.nextLine();
@@ -29,7 +30,7 @@ public class GetFormula {
 				}
 			}
 			
-//                      演算子が連続していたらfalseを返す			
+			// 演算子が連続しているかどうか
 			for(int i = 0; i < formula.length()-1; i++) {
 				int count = i + 1;
 				if((formula.charAt(i) == '+' || formula.charAt(i) == '-' || formula.charAt(i) == '/' || formula.charAt(i) == '*') && (formula.charAt(count) == '+' || formula.charAt(count) == '-' || formula.charAt(count) == '/' || formula.charAt(count) == '*')) {
@@ -37,7 +38,16 @@ public class GetFormula {
 				}
 			}
 			
-
+			for(int i = 0; i < formula.split("[+-/*×÷]").length; i++) {
+				String s = formula.split("[+-/*×÷]")[i];
+				if('0' <= s.charAt(0) && s.charAt(0) <= '9') {
+					for(int j = 1; j < s.length(); j++) {
+						if('a' <= s.charAt(j) && s.charAt(j) <= 'z' || 'A' <= s.charAt(j) && s.charAt(j) <= 'Z') {
+							varHead = false;
+						}
+					}
+				}
+			}
 			
 //			×や÷の記号を*, /に変更
 			formula = formula.replace("×", "*");
@@ -51,11 +61,13 @@ public class GetFormula {
 					count2++;
 				}
 			}
-				
+			
 			if(count1 != count2) {
 				System.out.println("カッコの数が合わないようです。式を入力しなおしてください。");
 			} else if (rowOperator == false) {
 				System.out.println("演算子が連続しています。入力しなおしてください。");
+			} else if(varHead == false) {
+				System.out.println("変数の先頭に数字を用いることはできません。入力しなおしてください。");
 			} else {
 				return formula;
 			}
