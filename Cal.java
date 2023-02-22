@@ -14,12 +14,13 @@ public class Cal {
 		
 		for(String e : formulaArray) {
 			if(('0' <= e.charAt(0) && e.charAt(0) <= '9'  || 'a' <= e.charAt(0) && e.charAt(0) <= 'z' || 'A' <= e.charAt(0) && e.charAt(0) <= 'Z')) {
-					if(isNum(e) == false) {
+					if(isNum(e) == false && checkHead(e) == true) {
 						System.out.println(e + "に数値を入力してください。");
 						Scanner s = new Scanner(System.in);
 						String var = s.nextLine();
 						e = var;
 					}
+					
 //				String型からDoubleにキャスト
 				stack.push(Double.parseDouble(e));
 			} else {
@@ -54,5 +55,22 @@ public class Cal {
 	        return false;
 	    }
 	}
+	
+	public static boolean checkHead(String s) {
+        boolean res = true;
+        
+        for(int i = 0; i < s.length(); i++) {
+            // もし先頭が数値でなかったら次の処理へ
+            if(!Character.isDigit(s.charAt(0))) {
+                continue;
+            } else {
+            // 変数にfalseを代入して処理を終了する
+                res =  false;
+                break;
+            }
+        }
+		
+        return res;
+    }
 	
 }
