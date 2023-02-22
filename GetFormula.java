@@ -40,6 +40,8 @@ public class GetFormula {
 			
 			for(int i = 0; i < formula.split("[+-/*×÷]").length; i++) {
 				String s = formula.split("[+-/*×÷]")[i];
+				s = s.replace("(", "");
+				s = s.replace(")", "");
 				if('0' <= s.charAt(0) && s.charAt(0) <= '9') {
 					for(int j = 1; j < s.length(); j++) {
 						if('a' <= s.charAt(j) && s.charAt(j) <= 'z' || 'A' <= s.charAt(j) && s.charAt(j) <= 'Z') {
